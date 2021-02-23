@@ -1,0 +1,52 @@
+
+- hosts: Frontend-server
+  user: ansible
+  become: yes
+  connection: ssh
+
+  tasks:
+  - name: Update
+    become: true
+    shell:  sudo yum install -y epel-release
+
+
+
+  - name: Update
+    become: true
+    shell: sudo yum update -y
+
+
+  - name: Install nginx
+    become: yes
+    yum:
+      name: nginx 
+      state: present
+
+#  handlers:
+  - name: start nginx
+    service:
+      name: nginx
+      state: started
+
+ # - name: Deactivate the default nginx site
+  #  file:
+   #   path: /etc/nginx/conf.d/default
+    #  state: absent
+
+#  tasks:
+  - name: Copy files to a remote machine
+    copy:
+      src: /home/ansible/chatapp.conf
+      dest: /etc/nginx/conf.d
+
+  - name: Execute a command for start nginx using the shell module
+    become: true
+    shell: sudo systemctl start nginx
+
+  - name: Execute a command for start nginx using the shell module
+    become: true
+    shell: sudo systemctl stop nginx
+
+  - name: Execute a command for start nginx using the shell module
+    become: true
+    shell: sudo systemctl start nginx
